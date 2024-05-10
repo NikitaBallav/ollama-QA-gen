@@ -3,15 +3,19 @@ import json
 from pypdf import PdfReader 
 import spacy
 from langchain.text_splitter import SpacyTextSplitter
+import csv
 
-def generate_question_answer_pairs_from_pdf(pdf_path, model_name, prompt):
+def generate_question_answer_pairs_from_pdf(pdf_path, model_name, prompt, output_csv):
     extracted_text = extract_text_from_pdf(pdf_path)
-    chunks = split_text_into_chunks(extracted_text)
-    pairs = []
-    for chunk in chunks:
-        chunk_pairs = generate_question_answer_pairs_with_ollama(model_name, prompt, chunk)
-        pairs.extend(chunk_pairs)
-    return pairs
+    all_different_chunks = split_text_into_chunks(extracted_text)
+    with open(output_csv, 'w', newline='', encoding='utf-8') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        for i, chunk_list in enumerate(all_different_chunks):
+            for j, chunk in enumerate(chunk_list):
+                QA_pairs = generate_question_answer_pairs_with_ollama(model_name, prompt, chunk)
+                rows = [line.split(" , ", 1) if line else ["", ""] for line in QA_pairs.split("\n")]
+                csv_writer.writerow([f"List{i+1}", f"Chunk{j+1}", chunk, rows])
+
 
 def extract_text_from_pdf(pdf_path):
     reader = PdfReader(pdf_path)
@@ -27,17 +31,17 @@ def split_text_into_chunks(text):
     print(f"Total characters: {total_characters}")
     print("Total number of tokens:", total_tokens)
     
-    chunk_size = 20000
+    chunk_size = 2000
     chunks = []
     all_different_chunks = []
-    while chunk_size >= 10000:
+    while chunk_size >= 500:
         text_splitter = SpacyTextSplitter(chunk_size=chunk_size, chunk_overlap=10)
         chunks = text_splitter.split_text(text)
         if len(chunks) > 1:
             print("Appending following chunk to the list of chunks : \n" + str(chunks) )
             all_different_chunks.append(chunks)
         #break
-        chunk_size -= 1000
+        chunk_size -= 100
     print("All different chunks are as following " + str(all_different_chunks))
     return all_different_chunks
 
@@ -50,12 +54,8 @@ def generate_question_answer_pairs_with_ollama(model_name, prompt, text):
     if response.status_code == 200:
         response_text = response.text
         data = json.loads(response_text)
-        pairs = []
-        for item in data['response'].split("\n"):
-            if item.strip() != "":
-                question, answer = item.split("|")
-                pairs.append((question.strip(), answer.strip()))
-        return pairs
+        actual_response=data['response']
+        return actual_response
     else:
         print("Error:", response.status_code, response.text)
         return None
@@ -63,7 +63,6 @@ def generate_question_answer_pairs_with_ollama(model_name, prompt, text):
 # Example usage:
 pdf_path = 'MLRC_english.pdf'
 model_name = 'llama3'
-prompt = "Your objective is to develop a robust question-and-answer database to train a chatbot for government website. Create question-answer pairs that enable users to obtain information about any government documentation. Ensure that no important information is overlooked. Frame all possible question-answer pairs from the following chunk:\n"
-pairs = generate_question_answer_pairs_from_pdf(pdf_path, model_name, prompt)
-for i, pair in enumerate(pairs):
-    print(f"Pair {i+1}: Question - {pair[0]}, Answer - {pair[1]}")
+prompt = "Frame all possible question answer pairs for the given content which is small chunk of government document, return the question answer pairs in comma separated values i.e csv format, each pair should be in new line, make sure the answers are in complete statements corresponding to each questions. The content is as follows: \n"
+output_csv = 'question_answer_pairs.csv'
+generate_question_answer_pairs_from_pdf(pdf_path, model_name, prompt, output_csv)
