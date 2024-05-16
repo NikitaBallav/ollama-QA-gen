@@ -16,10 +16,10 @@ ollama serve
 
 ## Install the following necessary components for LlamaIndex integrated with ollama and huggingface:
 
-pip install llama-index
-pip install llama-index-llms-ollama
-pip install llama-index-embeddings-huggingface
-pip install llama-index-readers-file
+### pip install llama-index
+### pip install llama-index-llms-ollama
+### pip install llama-index-embeddings-huggingface
+### pip install llama-index-readers-file
 
 # First run the ollama server with the command 'ollama serve'
 # Then run the storing_vector.py file : this will load the data from the webpages and will store the corresponding embeddings locally.
