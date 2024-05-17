@@ -27,6 +27,8 @@ pip install llama-index
 pip install llama-index-llms-ollama
 pip install llama-index-embeddings-huggingface
 pip install llama-index-readers-file
+pip install llama-index-readers-web
+
 ```
 
 1. First run the Ollama server with the command `ollama serve`
