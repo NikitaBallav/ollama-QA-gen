@@ -14,7 +14,9 @@ folders = ['awards_index', 'centralised-aadhaar-vault_index', 'command-and-contr
           'webcast_index']
 
 # Initialize merged data
-merged_graph_dict = {}
+merged_data = {
+    "graph_dict": {}
+}
 
 # Loop through each folder
 for folder in folders:
@@ -25,12 +27,7 @@ for folder in folders:
         data = json.load(file)
     
     # Merge the graph_dict
-    merged_graph_dict = {**merged_graph_dict, **data['graph_dict']}
-
-# Create the merged JSON data
-merged_data = {
-    "graph_dict": merged_graph_dict
-}
+    merged_data['graph_dict']= {**merged_data['graph_dict'],**data['graph_dict']}
 
 # Write the merged data to a new JSON file
 with open('combined_index/graph_store.json', 'w') as merged_file:
