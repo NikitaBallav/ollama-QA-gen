@@ -15,7 +15,12 @@ folders = ['awards_index', 'centralised-aadhaar-vault_index', 'command-and-contr
  
 # Initialize merged data
 merged_data = {
-    "index_store/data": {}
+    "index_store/data": {
+        "vector_index": {
+            "__type__": "vector_store",
+            "__data__": "{\"index_id\": \"vector_index\", \"summary\": null, \"nodes_dict\": {}, \"doc_id_dict\": {}, \"embeddings_dict\": {}}"
+        }
+    }
 }
 
 # Loop through each folder
@@ -26,9 +31,13 @@ for folder in folders:
     with open(file_path, 'r') as file:
         data = json.load(file)
     
-    # Merge the index_store/data
-    merged_data['index_store/data'] = {**merged_data['index_store/data'], **data['index_store/data']}
+    # Merge the vector_index data
+    vector_index_data = json.loads(merged_data['index_store/data']['vector_index']['__data__'])
+    vector_index_data['nodes_dict'] = {**vector_index_data['nodes_dict'], **json.loads(data['index_store/data']['vector_index']['__data__'])['nodes_dict']}
+    vector_index_data['doc_id_dict'] = {**vector_index_data['doc_id_dict'], **json.loads(data['index_store/data']['vector_index']['__data__'])['doc_id_dict']}
+    vector_index_data['embeddings_dict'] = {**vector_index_data['embeddings_dict'], **json.loads(data['index_store/data']['vector_index']['__data__'])['embeddings_dict']}
+    merged_data['index_store/data']['vector_index']['__data__'] = json.dumps(vector_index_data)
 
 # Write the merged data to a new JSON file
-with open('home_service/index_store.json', 'w') as merged_file:
+with open('combined_index/index_store.json', 'w') as merged_file:
     json.dump(merged_data, merged_file, indent=4)
