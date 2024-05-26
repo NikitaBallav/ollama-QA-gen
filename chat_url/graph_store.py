@@ -33,5 +33,5 @@ merged_data = {
 }
 
 # Write the merged data to a new JSON file
-with open('home_service/graph_store.json', 'w') as merged_file:
+with open('combined_index/graph_store.json', 'w') as merged_file:
     json.dump(merged_data, merged_file, indent=4)
