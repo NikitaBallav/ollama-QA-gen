@@ -38,5 +38,5 @@ for folder in folders:
     merged_data['metadata_dict'] = {**merged_data['metadata_dict'], **data['metadata_dict']}
 
 # Write the merged data to a new JSON file
-with open('home_service/image_vector_store.json', 'w') as merged_file:
+with open('combined_index/image_vector_store.json', 'w') as merged_file:
     json.dump(merged_data, merged_file, indent=4)
