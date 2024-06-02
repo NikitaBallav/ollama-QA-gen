@@ -15,10 +15,10 @@ class defaultJigyasa(APIView):
         input_val = request.data.get("input")
 
         
-        query_engine = settings.INDEX_INSTANCE.as_query_engine()
+        # query_engine = settings.INDEX_INSTANCE.as_query_engine()
 
         query = input_val[:4000]
-        val_query_response = query_engine.query(query)
+        val_query_response = settings.QUERY_ENGINE.query(query)
         print(val_query_response)
 
         node = val_query_response.source_nodes[0]
