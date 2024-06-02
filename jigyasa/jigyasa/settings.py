@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['10.152.2.137']
 
 
-FILE_TO_URL_MAPPING  = {'SIO.csv': 'https://maharashtra.nic.in/directory/',
+FILE_TO_URL_MAPPING  = {'SIO (State Informatics Officer).csv': 'https://maharashtra.nic.in/directory/',
  'Maharashtra State Centre, Mumbai.csv': 'https://maharashtra.nic.in/directory/',
  'Ahmadnagar.csv': 'https://maharashtra.nic.in/directory/',
  'Akola.csv': 'https://maharashtra.nic.in/directory/',
