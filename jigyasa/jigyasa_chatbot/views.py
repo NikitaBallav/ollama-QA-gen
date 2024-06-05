@@ -18,7 +18,7 @@ class defaultJigyasa(APIView):
         # query_engine = settings.INDEX_INSTANCE.as_query_engine()
 
         query = input_val[:4000]
-        val_query_response = settings.QUERY_ENGINE.query(query)
+        val_query_response = settings.CHAT_ENGINE.chat(query)
         print(val_query_response)
 
         node = val_query_response.source_nodes[0]

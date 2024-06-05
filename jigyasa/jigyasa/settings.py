@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-sym*i6d+*275y!9(b^%qffdmi3zi&&wgs@(p2w$5b5u!t_k4os
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','192.168.13.87']
+ALLOWED_HOSTS = ['0.0.0.0','192.168.13.87','10.152.2.137']
 
 
 FILE_TO_URL_MAPPING  = {'Screen Reader Information.csv': 'https://maharashtra.nic.in/help/',
@@ -211,7 +211,8 @@ Settings.embed_model = HuggingFaceEmbedding(model_name="Alibaba-NLP/gte-large-en
         #persist_dir = "/content/combine_index"
 #persist_dir = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\combined_index"
 
-persist_dir = "C:\\Users\\Nikita Ballav\\Desktop\\demo_chat\\ollama-QA-gen\\chat_url\\combined_index"
+persist_dir = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\combined_index_v1\\"
+
 
 storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
 INDEX_INSTANCE = load_index_from_storage(storage_context)
@@ -219,4 +220,33 @@ INDEX_INSTANCE = load_index_from_storage(storage_context)
 rerank = SentenceTransformerRerank(model="BAAI/bge-reranker-large", top_n=3)
 
 
-QUERY_ENGINE = INDEX_INSTANCE.as_query_engine(similarity_top_k=3, node_postprocessors=[rerank])
+
+from llama_index.core.storage.chat_store import SimpleChatStore
+from llama_index.core.memory import ChatMemoryBuffer
+
+# Load the chat store from the file
+loaded_chat_store1 = SimpleChatStore.from_persist_path(
+    persist_path="C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\chat_store_v2.pkl"
+)
+
+chat_memory1 = ChatMemoryBuffer.from_defaults(
+    token_limit=30000,
+    chat_store=loaded_chat_store1,
+    chat_store_key="user1",
+
+)
+
+
+# Initialize the chat engine
+CHAT_ENGINE = INDEX_INSTANCE.as_chat_engine(
+    chat_mode="context",
+    system_prompt="You are a helpful AI assistant. You are expert in retrieving the answer for the user input based on the provided context. Important note: You must not mention any file name or file path in your response.",
+    memory=chat_memory1, verbose = True,similarity_top_k=10, node_postprocessors=[rerank]
+)
+
+
+
+
+#QUERY_ENGINE = INDEX_INSTANCE.as_query_engine(similarity_top_k=3, node_postprocessors=[rerank])
+
+
