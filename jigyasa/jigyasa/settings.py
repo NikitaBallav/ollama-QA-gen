@@ -26,10 +26,12 @@ SECRET_KEY = 'django-insecure-sym*i6d+*275y!9(b^%qffdmi3zi&&wgs@(p2w$5b5u!t_k4os
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.152.2.137']
+ALLOWED_HOSTS = ['0.0.0.0','192.168.13.87']
 
 
-FILE_TO_URL_MAPPING  = {'SIO (State Informatics Officer).csv': 'https://maharashtra.nic.in/directory/',
+FILE_TO_URL_MAPPING  = {'Screen Reader Information.csv': 'https://maharashtra.nic.in/help/',
+ 'Plug-in for alternate document types.csv': 'https://maharashtra.nic.in/help/',
+ 'SIO (State Informatics Officer).csv': 'https://maharashtra.nic.in/directory/',
  'Maharashtra State Centre, Mumbai.csv': 'https://maharashtra.nic.in/directory/',
  'Ahmadnagar.csv': 'https://maharashtra.nic.in/directory/',
  'Akola.csv': 'https://maharashtra.nic.in/directory/',
@@ -40,6 +42,7 @@ FILE_TO_URL_MAPPING  = {'SIO (State Informatics Officer).csv': 'https://maharash
  'Buldana.csv': 'https://maharashtra.nic.in/directory/',
  'Chandrapur.csv': 'https://maharashtra.nic.in/directory/',
  'Dhule.csv': 'https://maharashtra.nic.in/directory/',
+'District Centres (final test).csv': 'https://maharashtra.nic.in/district-centres/',
  'Gadchiroli.csv': 'https://maharashtra.nic.in/directory/',
  'Gondia.csv': 'https://maharashtra.nic.in/directory/',
  'Hingoli.csv': 'https://maharashtra.nic.in/directory/',
@@ -56,6 +59,7 @@ FILE_TO_URL_MAPPING  = {'SIO (State Informatics Officer).csv': 'https://maharash
  'Palghar.csv': 'https://maharashtra.nic.in/directory/',
  'Parbhani.csv': 'https://maharashtra.nic.in/directory/',
  'Pune District.csv': 'https://maharashtra.nic.in/directory/',
+'Reporting_officer.csv': 'https://maharashtra.nic.in/organization-structure/',
  'Raigad.csv': 'https://maharashtra.nic.in/directory/',
  'Ratnagiri.csv': 'https://maharashtra.nic.in/directory/',
  'Sangli.csv': 'https://maharashtra.nic.in/directory/',
@@ -67,8 +71,7 @@ FILE_TO_URL_MAPPING  = {'SIO (State Informatics Officer).csv': 'https://maharash
  'Washim.csv': 'https://maharashtra.nic.in/directory/',
  'Yavatmal.csv': 'https://maharashtra.nic.in/directory/',
  'APPELLATE AUTHORITY.csv': 'https://maharashtra.nic.in/rti/',
- 'PUBLIC INFORMATION OFFICERS ( PIO ).csv': 'https://maharashtra.nic.in/rti/',
- 'District Centres.csv': 'https://maharashtra.nic.in/district-centres/'}
+ 'PUBLIC INFORMATION OFFICERS ( PIO ).csv': 'https://maharashtra.nic.in/rti/'}
 
 
 # Application definition
@@ -167,7 +170,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
+from llama_index.core.postprocessor import SentenceTransformerRerank
 from llama_index.core import SimpleDirectoryReader
 from llama_index.core import VectorStoreIndex
 from llama_index.llms.ollama import Ollama
@@ -206,7 +209,14 @@ from llama_index.core import (
 Settings.llm = Ollama(model="llama3", temperature=0, request_timeout=500.0)
 Settings.embed_model = HuggingFaceEmbedding(model_name="Alibaba-NLP/gte-large-en-v1.5", trust_remote_code=True)
         #persist_dir = "/content/combine_index"
-persist_dir = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\combined_index"
+#persist_dir = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\combined_index"
+
+persist_dir = "C:\\Users\\Nikita Ballav\\Desktop\\demo_chat\\ollama-QA-gen\\chat_url\\combined_index"
 
 storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
 INDEX_INSTANCE = load_index_from_storage(storage_context)
+
+rerank = SentenceTransformerRerank(model="BAAI/bge-reranker-large", top_n=3)
+
+
+QUERY_ENGINE = INDEX_INSTANCE.as_query_engine(similarity_top_k=3, node_postprocessors=[rerank])
