@@ -29,12 +29,12 @@ DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0','192.168.13.87','10.152.2.137']
 
 
-FILE_TO_URL_MAPPING  = {'news_updates.txt': 'https://maharashtra.nic.in/news-update/',
-'Nic.txt': 'https://maharashtra.nic.in/',
-'districts.txt': 'https://maharashtra.nic.in/district-centres/',
-'events.txt': 'https://maharashtra.nic.in/events/',
-'services.txt': 'https://maharashtra.nic.in/services/',
-'photo_gallery.txt': 'https://maharashtra.nic.in/photo-gallery/',
+FILE_TO_URL_MAPPING  = {'news_updates.docx': 'https://maharashtra.nic.in/news-update/',
+'Nic.docx': 'https://maharashtra.nic.in/',
+'districts.docx': 'https://maharashtra.nic.in/district-centres/',
+'events.docx': 'https://maharashtra.nic.in/events/',
+'services.docx': 'https://maharashtra.nic.in/services/',
+'photo_gallery.docx': 'https://maharashtra.nic.in/photo-gallery/',
 'Screen Reader Information.csv': 'https://maharashtra.nic.in/help/',
  'Plug-in for alternate document types.csv': 'https://maharashtra.nic.in/help/',
 'SIO (State Informatics Officer).csv': 'https://maharashtra.nic.in/directory/',
