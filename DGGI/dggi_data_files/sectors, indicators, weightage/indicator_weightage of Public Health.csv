@@ -1,0 +1,24 @@
+﻿sector name,indicator Name,weightage
+Public Health,% of pregnant women (aged 15-49) years who are anaemic,2.5
+Public Health,% of woman who took Full ANC check-up out of total pregnant woman,5
+Public Health,% of woman who took post-natal check-up between 48 hrs and 14 days of delivery,2.5
+Public Health,ASHA worker per 500 Population in Tribal and 1000 population in non-tribal,2.5
+Public Health,Annual Parasitic Index (API) (Malaria),2.5
+Public Health,Availability of Doctors at PHCs / HWCs,5
+Public Health,Episodes of Diarrhoea and Dysentery in community,2.5
+Public Health,Infant Mortality per thousand births,10
+Public Health,Maternal Mortality Per thousand deliveries,10
+Public Health,No. of Hospital Beds per 1000 Population (Public and govt. supported hospitals only),5
+Public Health,Percentage of Baby Care Kit distributed against the birth,2.5
+Public Health,Percentage of Full Immunisation,5
+Public Health,Percentage of Household covered under Mahatma Jyotirao Phule Jan Arogya Yojana (MJPJAY) and Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB-PMJAY) Scheme,2.5
+Public Health,Percentage of Institutional Delivery,10
+Public Health,Percentage of Low Birth Weight Children,2.5
+Public Health,Percentage of Pregnant Woman Received 4 or More Complete ANC check-ups + TT2/Booster + 180 IFA,2.5
+Public Health,Percentage of Sub-centres / PHCs converted into Health & Wellness Centres (HWCs),5
+Public Health,Percentage of children aged 0 to 5 years according to nutrition grades,2.5
+Public Health,Prevalence of Anaemia ,2.5
+Public Health,"Proportion of Functional FRUs (First Referral Units) against the norm of 1 per 500,000 Population (1 per 300,000 in hilly areas)",5
+Public Health,Ratio of Block Facilitator for PHC ,2.5
+Public Health,Sex Ratio at birth,5
+Public Health,"a) number of Physicians b) number of nurses/ midwives per 10,000 population",5
