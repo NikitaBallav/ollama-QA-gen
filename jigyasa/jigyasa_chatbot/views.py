@@ -23,6 +23,9 @@ class defaultJigyasa(APIView):
 
         node = val_query_response.source_nodes[0]
         response_json = {}
+
+        ## Hashing the following to get the only relavent URL now
+        '''
         response_json['response'] = val_query_response.response
         response_json['search_Score'] = node.score
 
@@ -30,6 +33,20 @@ class defaultJigyasa(APIView):
             response_json['url'] = str(node.metadata['URL'])
         except  KeyError as e:
             response_json['url'] =  str(settings.FILE_TO_URL_MAPPING[node.metadata['file_name']])
+        '''
+
+        ## New code to give the relavent URL 
+        try:
+            response_json['Please visit URL: '] = str(node.metadata['URL'])
+        except KeyError:
+            file_name = node.metadata['file_name']
+        try:
+            response_json['Please visit URL: '] =  next(url for url, files in settings.FILE_TO_URL_MAPPING.items() if file_name in files)
+        except StopIteration:
+            response_json['Please visit the following url'] = 'No Relavent URL found'
+
+
+
 
 
         #input_val = request.data.get("input")

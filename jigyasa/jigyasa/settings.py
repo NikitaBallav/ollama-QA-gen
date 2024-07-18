@@ -29,12 +29,119 @@ DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0','192.168.13.87','10.152.2.137']
 
 
-FILE_TO_URL_MAPPING  = {'news_updates.docx': 'https://maharashtra.nic.in/news-update/',
+FILE_TO_URL_MAPPING = {
+    'https://dggi.maharashtra.gov.in/compositeDistricts': [
+        "Ranking and scores of all 36 districts.csv"
+    ],
+    'https://dggi.maharashtra.gov.in/sectorDistricts': [
+        "sector ranking of Human Resource Development.csv",
+        "sector ranking of Public Health.csv",
+        "sector ranking of Citizen Centric Governance.csv",
+        "sector ranking of Agriculture & Allied Sector.csv",
+        "sector ranking of Commerce and Industry.csv",
+        "sector ranking of Social Development.csv",
+        "sector ranking of Environment.csv",
+        "sector ranking of Public Infrastructure and Utilities.csv",
+        "sector ranking of Economic Governance and Financial Inclusion.csv",
+        "sector ranking of Judiciary and Public Safety.csv"
+    ],
+    'https://dggi.maharashtra.gov.in/methodologySectorIndicator': [
+        "indicator_weightage of Social Development.csv",
+        "indicator_weightage of Environment.csv",
+        "indicator_weightage of Citizen Centric Governance.csv",
+        "indicator_weightage of Human Resource Development.csv",
+        "indicator_weightage of Public Health.csv",
+        "indicator_weightage of Judiciary and Public Safety.csv",
+        "indicator_weightage of Public Infrastructure and Utilities.csv",
+        "indicator_weightage of Economic Governance and Financial Inclusion.csv",
+        "indicator_weightage of Commerce and Industry.csv",
+        "indicator_weightage of Agriculture & Allied Sector.csv"
+    ],
+    'https://dggi.maharashtra.gov.in/performanceAspirantDistricts': [
+        "Aspirant Districts in Judiciary and Public Safety.csv",
+        "Aspirant Districts in Environment.csv",
+        "Aspirant Districts in Economic Governance and Financial Inclusion.csv",
+        "Aspirant Districts in Human Resource Development.csv",
+        "Aspirant Districts in Public Infrastructure and Utilities.csv",
+        "Aspirant Districts in Public Health.csv",
+        "Aspirant Districts in Social Development.csv",
+        "Aspirant Districts in Commerce and Industry.csv",
+        "Aspirant Districts in Agriculture & Allied Sector.csv",
+        "Aspirant Districts in Citizen Centric Governance.csv"
+    ],
+    'https://dggi.maharashtra.gov.in/performanceOverview': [
+        "Aspirant Districts.csv",
+        "Achiever Districts.csv",
+        "Performer Districts.csv"
+    ],
+    'https://dggi.maharashtra.gov.in/indicatorRanking': [
+        "Indicator score of Environment sector.csv",
+        "Indicator score of Judiciary & Public Safety sector.csv",
+        "Indicator score of Economic Governance and Financial Inclusion sector.csv",
+        "Indicator score of Social development sector.csv",
+        "Indicator score of Public Infrastructure & Utilities sector.csv",
+        "Indicator score of Public Health sector.csv",
+        "indicator score of Human Resource Development sector.csv",
+        "indicator score of Agriculture & Allied Sector.csv"
+    ],
+    'https://dggi.maharashtra.gov.in/methodologyRankingScore': [
+        "Methodology for Computation of Ranks.pdf"
+    ],
+    'https://dggi.maharashtra.gov.in/aboutUs': [
+        "Overview.pdf"
+    ],
+    'https://dggi.maharashtra.gov.in/assets/reports/report2023.pdf': [
+        "dggi_report2023.pdf"
+    ],
+    'https://dggi.maharashtra.gov.in/ContactUs': [
+        "Contact Us Details.pdf"
+    ],
+    'https://dggi.maharashtra.gov.in/disclaimer': [
+        "Disclaimer.pdf"
+    ],
+    'https://dggi.maharashtra.gov.in/websitepolicy': [
+        "Website Policies.pdf"
+    ],
+    'https://dggi.maharashtra.gov.in/WIM': [
+        "Web Information Manager.pdf"
+    ],
+    'https://dggi.maharashtra.gov.in/terms-and-condition': [
+        "Terms and conditions.pdf"
+    ],
+    'https://dggi.maharashtra.gov.in/performanceAchieverDistricts': [
+        "Achiever Districts in Citizen Centric Governance.csv",
+        "Achiever Districts in Public Infrastructure and Utilities.csv",
+        "Achiever Districts in Commerce and Industry.csv",
+        "Achiever Districts in Human Resource Development.csv",
+        "Achiever Districts in Environment.csv",
+        "Achiever Districts in Judiciary and Public Safety.csv",
+        "Achiever Districts in Social Development.csv",
+        "Achiever Districts in Economic Governance and Financial Inclusion.csv",
+        "Achiever Districts in Agriculture & Allied Sector.csv",
+        "Achiever Districts in Public Health.csv"
+    ],
+    'https://dggi.maharashtra.gov.in/performancePerformerDistricts': [
+        "Performer Districts in Environment.csv",
+        "Performer Districts in Social Development.csv",
+        "Performer Districts in Commerce and Industry.csv",
+        "Performer Districts in Citizen Centric Governance.csv",
+        "Performer Districts in Agriculture & Allied Sector.csv",
+        "Performer Districts in Human Resource Development.csv",
+        "Performer Districts in Economic Governance and Financial Inclusion.csv",
+        "Performer Districts in Public Health.csv",
+        "Performer Districts in Public Infrastructure and Utilities.csv",
+        "Performer Districts in Judiciary and Public Safety.csv"
+    ]
+}
+
+
+FILE_TO_URL_MAPPING11 = {'news_updates_v1.csv': 'https://maharashtra.nic.in/news-update/',
 'Nic.docx': 'https://maharashtra.nic.in/',
 'districts.docx': 'https://maharashtra.nic.in/district-centres/',
-'events.docx': 'https://maharashtra.nic.in/events/',
+'events_v1.csv': 'https://maharashtra.nic.in/events/',
 'services.docx': 'https://maharashtra.nic.in/services/',
 'photo_gallery.docx': 'https://maharashtra.nic.in/photo-gallery/',
+'video_gallery.docx': 'https://maharashtra.nic.in/video-gallery/',
 'Screen Reader Information.csv': 'https://maharashtra.nic.in/help/',
  'Plug-in for alternate document types.csv': 'https://maharashtra.nic.in/help/',
 'SIO (State Informatics Officer).csv': 'https://maharashtra.nic.in/directory/',
@@ -214,15 +321,17 @@ from llama_index.core import (
 Settings.llm = Ollama(model="llama3", temperature=0, request_timeout=500.0)
 Settings.embed_model = HuggingFaceEmbedding(model_name="Alibaba-NLP/gte-large-en-v1.5", trust_remote_code=True)
         #persist_dir = "/content/combine_index"
-#persist_dir = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\combined_index"
+#persist_dir = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\combined_index  C:\Users\USER\Desktop\LLM_Chatbot\ollama-QA-gen\chat_url\combined_index_latest"
 
-persist_dir = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\combined_index_v1\\"
+persist_dir11 = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\combined_index_latest\\"
+
+persist_dir = "C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\DGGI\\dggi_index_v1\\"
 
 
 storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
 INDEX_INSTANCE = load_index_from_storage(storage_context)
 
-rerank = SentenceTransformerRerank(model="BAAI/bge-reranker-large", top_n=3)
+rerank = SentenceTransformerRerank(model="BAAI/bge-reranker-large", top_n=7)
 
 
 
@@ -230,13 +339,17 @@ from llama_index.core.storage.chat_store import SimpleChatStore
 from llama_index.core.memory import ChatMemoryBuffer
 
 # Load the chat store from the file
+'''
 loaded_chat_store1 = SimpleChatStore.from_persist_path(
     persist_path="C:\\Users\\USER\\Desktop\\LLM_Chatbot\\ollama-QA-gen\\chat_url\\chat_store_v2.pkl"
 )
+'''
+
+chat_store_to_be_saved = SimpleChatStore()
 
 chat_memory1 = ChatMemoryBuffer.from_defaults(
     token_limit=30000,
-    chat_store=loaded_chat_store1,
+    chat_store=chat_store_to_be_saved,
     chat_store_key="user1",
 
 )
